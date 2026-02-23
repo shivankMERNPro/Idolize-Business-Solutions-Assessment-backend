@@ -58,10 +58,10 @@ This project is designed to manage **user profiles** efficiently with:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/shivankMERNPro/Idolize-Business-Solutions-Assessment.git
+git clone https://github.com/shivankMERNPro/Node-Boilerplate.git
 ```
 ```bash
-cd Idolize-Business-Solutions-Assessment
+cd Node-Boilerplate.git
 ```
 
 ```bash
