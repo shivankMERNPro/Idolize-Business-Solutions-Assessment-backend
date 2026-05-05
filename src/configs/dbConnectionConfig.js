@@ -1,18 +1,19 @@
 import mongoose from 'mongoose';
-import { env } from '../constants/env';
-import { logger } from '../utils/logger';
+
+import { env } from '../constants/env.js';
+import { logger } from '../utils/logger.js';
 
 let isConnected = false;
 let reconnectAttempts = 0;
 const MAX_RETRIES = 5;
 
-const connectDB = async (): Promise<void> => {
+const connectDB = async () => {
   if (isConnected) {
     logger.info('MongoDB is already connected.');
     return;
   }
 
-  const options: mongoose.ConnectOptions = {
+  const options = {
     dbName: env.mongoDbName,
     maxPoolSize: env.mongoMaxPoolSize,
     minPoolSize: env.mongoMinPoolSize,
@@ -30,13 +31,15 @@ const connectDB = async (): Promise<void> => {
       `MongoDB connected successfully to database: ${env.mongoDbName}`,
     );
   } catch (error) {
-    reconnectAttempts++;
+    reconnectAttempts += 1;
+    const message = error instanceof Error ? error.message : String(error);
+
     logger.error(
-      `MongoDB connection error (${reconnectAttempts}/${MAX_RETRIES}): ${(error as Error).message}`,
+      `MongoDB connection error (${reconnectAttempts}/${MAX_RETRIES}): ${message}`,
     );
 
     if (reconnectAttempts < MAX_RETRIES) {
-      logger.warn(`Retrying connection in 5 seconds...`);
+      logger.warn('Retrying connection in 5 seconds...');
       setTimeout(connectDB, 5000);
     } else {
       logger.error('Max retry attempts reached. Exiting process.');
@@ -45,7 +48,6 @@ const connectDB = async (): Promise<void> => {
   }
 };
 
-// Handle process termination gracefully
 process.on('SIGINT', async () => {
   await mongoose.connection.close();
   logger.warn('MongoDB connection closed due to app termination (SIGINT).');
@@ -58,7 +60,6 @@ process.on('SIGTERM', async () => {
   process.exit(0);
 });
 
-// Connection event listeners
 mongoose.connection.on('connected', () => logger.info('MongoDB connected.'));
 mongoose.connection.on('disconnected', () =>
   logger.warn('MongoDB disconnected.'),

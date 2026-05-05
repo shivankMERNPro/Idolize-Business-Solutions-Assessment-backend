@@ -2,11 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "type": "module",
+  "main": "src/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts",
+    "build": "echo \"No build step required for this JavaScript project\"",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
     "prepare": "husky install || true"
@@ -20,42 +21,32 @@
     "chalk": "^5.6.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "csrf-csrf": "^4.0.3",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^8.1.0",
     "helmet": "^8.1.0",
+    "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.1",
     "morgan": "^1.10.1",
+    "uuid": "^13.0.0",
     "winston": "^3.19.0",
     "winston-daily-rotate-file": "^5.0.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/chalk": "^0.4.31",
-    "@types/cookie-parser": "^1.4.9",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
-    "@types/express-rate-limit": "^5.1.3",
-    "@types/helmet": "^0.0.48",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/morgan": "^1.9.10",
-    "@types/node": "^24.10.9",
-    "@types/winston": "^2.4.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.4",
     "nodemon": "^3.1.10",
-    "prettier": "^3.6.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "prettier": "^3.6.2"
   },
   "lint-staged": {
-    "server/**/*.{js,jsx,ts,tsx,json,css,md}": [
-      "npm --prefix server run format:fix"
+    "*.{js,json,md}": [
+      "prettier --write"
     ]
   }
 }
